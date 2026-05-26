@@ -11,7 +11,13 @@ def fixed_size_chunk(text: str, chunk_size: int, overlap: int):
 
 def split_by_heading(text: str):
     sections = text.split("## ")
-    return sections
+    result = []
+    for i, sec in enumerate(sections):
+        if i == 0:
+            result.append(sec)
+        else:
+            result.append("## " + sec)
+    return result
 
 if __name__ == "__main__":
     with open("../data/technical_manual.md", "r") as f:
