@@ -9,14 +9,14 @@ def fixed_size_chunk(text: str, chunk_size: int, overlap: int):
         start_index = (start_index + chunk_size) - overlap
     return chunks
 
-def split_by_heading(text: str):
-    sections = text.split("## ")
+def split_by_heading(text: str, separator: str):
+    sections = text.split(separator)
     result = []
     for i, sec in enumerate(sections):
         if i == 0:
             result.append(sec)
         else:
-            result.append("## " + sec)
+            result.append(separator + sec)
     return result
 
 if __name__ == "__main__":
@@ -33,9 +33,20 @@ if __name__ == "__main__":
         print(f"\n--- Chunk {i} (length: {len(chunk)}) ---")
         print(chunk)
     
-    sections = split_by_heading(text)
-    print(f"\nNumber of sections: {len(sections)}")
+    # Split on major heading
+    major = split_by_heading(text, "\n## ")
     
-    for i, sec in enumerate(sections):
-        print(f"\n--- Section {i} (length: {len(sec)}) ---")
+    print(f"\nSplit on '## ': {len(major)} sections")
+    
+    for i, sec in enumerate(major[:3]):
+        print(f"\n--- Major Section {i} (length: {len(sec)}) ---")
+        print(sec[:150])
+
+    # Split on sub-headings
+    minor = split_by_heading(text, "\n### ")
+    
+    print(f"\nSplit on '### ': {len(minor)} sections")
+    
+    for i, sec in enumerate(minor[:3]):
+        print(f"\n--- Minor Section {i} (length: {len(sec)}) ---")
         print(sec[:150])
