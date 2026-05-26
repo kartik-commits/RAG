@@ -9,6 +9,10 @@ def fixed_size_chunk(text: str, chunk_size: int, overlap: int):
         start_index = (start_index + chunk_size) - overlap
     return chunks
 
+def split_by_heading(text: str):
+    sections = text.split("## ")
+    return sections
+
 if __name__ == "__main__":
     with open("../data/technical_manual.md", "r") as f:
         text = f.read()
@@ -22,3 +26,10 @@ if __name__ == "__main__":
     for i, chunk in enumerate(chunks[:3]):
         print(f"\n--- Chunk {i} (length: {len(chunk)}) ---")
         print(chunk)
+    
+    sections = split_by_heading(text)
+    print(f"\nNumber of sections: {len(sections)}")
+    
+    for i, sec in enumerate(sections):
+        print(f"\n--- Section {i} (length: {len(sec)}) ---")
+        print(sec[:150])
